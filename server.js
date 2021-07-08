@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const {MONGO_URI} = require("./config/db.config")
 
+const postMahasiswa = require('./routes/api/Mahasiswa');
 
 const app = express();
 
@@ -15,7 +16,12 @@ mongoose.connect(MONGO_URI, {
     useUnifiedTopology : true,
 })
     .then(() => console.log("Mongodb database Connected"))
-    .catch(err => console.log(err));
+    .catch(err => console.log(err)
+);
+
+//Router
+app.use('/api/mahasiswa', postMahasiswa);
+
 
 app.get('/', (req,res) => {
     res.send("Haloo BOSS");
