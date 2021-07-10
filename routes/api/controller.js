@@ -14,6 +14,17 @@ router.get('/', async (req, res) => {
     }
 })
 
+//Get Data byID
+router.get('/:id', async (req, res) => {
+    try{
+        const post = await dataMahasiswa.findById(req.params.id);
+        if(!post) throw Error("Terdapat Kegagalan");
+        res.status(200).json(post);
+    }catch (err){
+        res.status(400).json({msg: err});
+    }
+})
+
 //Menambah Data
 router.post ('/', async (req,res) => {
     const newPost = new dataMahasiswa(req.body);
@@ -39,9 +50,9 @@ router.delete ('/:id', async (req,res) => {
 })
 
 //Update Data Mahasiswa
-router.patch('/:id', async (req,res) => {
+router.put('/:id', async (req,res) => {
     try{
-        const post = await dataMahasiswa.findByIdAndUpdate(req.params.id, req.body);
+        const post = await dataMahasiswa.findByIdAndUpdate(req.params.id, req.body, { useFindAndModify: false });
         if(!post) throw Error("Terdapat Kegagalan");
         res.status(200).json({succes : true});
     }catch (err){
