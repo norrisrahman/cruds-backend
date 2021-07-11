@@ -1,9 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-// const mongoose = require("mongoose");
-// const {MONGO_URI} = require("./config/db.config")
 const cors = require('cors');
 const db = require('./config/db.config')
+
 
 const postMahasiswa = require('./routes/api/controller');
 
@@ -23,7 +22,6 @@ app.get(db);
 
 //Router
 app.use('/api/mahasiswa', postMahasiswa);
-
 
 app.get('/', (req,res) => {
     res.send("Haloo BOSS");

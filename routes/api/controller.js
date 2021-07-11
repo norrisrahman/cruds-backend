@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const dataMahasiswa = require('../../models/dataMahasiswa');
-const dataUSer = require('../../models/dataUser')
 
 //Read Data
 router.get('/', async (req, res) => {
@@ -57,18 +56,6 @@ router.put('/:id', async (req,res) => {
         if(!post) throw Error("Terdapat Kegagalan");
         res.status(200).json({succes : true});
     }catch (err){
-        res.status(400).json({msg: err});
-    }
-})
-
-router.post ('/user/', async (req,res) => {
-    const newUser = new dataUSer(req.body);
-
-    try{
-        const user = await newUser.save();
-        if(!user) throw Error("Terdapat Kegagalan");
-        res.status(200).json(user);
-    }catch(err){
         res.status(400).json({msg: err});
     }
 })
