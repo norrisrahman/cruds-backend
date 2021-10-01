@@ -2,17 +2,19 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors');
 const db = require('./config/db.config')
-
-
-const postMahasiswa = require('./routes/api/controller');
+const apiRequest = require('./routes/api/controller');
+const userRequest = require ('./routes/api/userController')
+const path = require('path')
+const cookieParser = require('cookie-parser')
 
 const app = express();
 
-var corsOption = {
-    origin: "http://localhost:3000"
-};
 
-app.use(cors(corsOption));
+app.use(cookieParser())
+app.use(cors({
+    credentials: true,
+    origin: ['http://localhost:3000', 'http://localhost:8080']
+}));
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -21,10 +23,11 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.get(db);
 
 //Router
-app.use('/api/mahasiswa', postMahasiswa);
+app.use('/api/mahasiswa', apiRequest);
+app.use('/api/auth', userRequest)
 
 app.get('/', (req,res) => {
-    res.send("Haloo BOSS");
+    res.sendFile(path.join(__dirname+'/page/index.html'))
 })
 
 const PORT = process.env.PORT || 8080;
